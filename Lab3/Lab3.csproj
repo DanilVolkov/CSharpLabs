@@ -9,16 +9,10 @@
 
   <ItemGroup>
     <Compile Remove="Task2.cs" />
-    <Compile Remove="Task3.cs" />
-    <Compile Remove="Task4.cs" />
-    <Compile Remove="Task5.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Task2.cs" />
-    <None Include="Task3.cs" />
-    <None Include="Task4.cs" />
-    <None Include="Task5.cs" />
   </ItemGroup>
 
 </Project>
