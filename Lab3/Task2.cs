@@ -1,11 +1,4 @@
 ﻿using System.Text.Json;
-using System;
-using System.Diagnostics.Metrics;
-using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Xml;
-using System.Numerics;
-using System.Threading.Tasks;
 
 class Program
 {
@@ -55,7 +48,6 @@ class Program
             numberOverdueOrders = 0;
 
         }
-
     }
 
     class Task
@@ -81,8 +73,6 @@ class Program
             onTheRoad = new DeliveryTime();
             onTheCooking = 0;
             delayInWarehouse = false;
-
-
         }
 
         public void updateStatus()
@@ -396,10 +386,13 @@ class Program
         pizza.tasks.Add(new Task(2, 30));
         pizza.tasks.Add(new Task(3, 50));
         int index = 0;
+        Queue<int> tasksOnWarehouse = new Queue<int>();
         while (pizza.tasks.Count > 0)
         {
-            // удаляем заявки, у которых статус Deleted
-            pizza.tasks = pizza.tasks.Where(task => task.status != TaskStatus.Deleted).ToList();
+            if (index == 20)
+            {
+                pizza.tasks.Add(new Task(20, 40));
+            }
 
             // сортировка для приоритета заявок по времени
             //pizza.tasks.Sort((task1, task2) => task2.time.CompareTo(task1.time));
@@ -437,13 +430,28 @@ class Program
                         break;
 
                     case TaskStatus.Ready:
-                        if (pizza.actualSizeWarehouse < pizza.sizeWarehouse)
+                        bool f = false;
+                        if (tasksOnWarehouse.Contains(task.id) && (tasksOnWarehouse.First() == task.id))
                         {
+                            f = true;
+                        }
+
+                        if ((pizza.actualSizeWarehouse < pizza.sizeWarehouse) && (tasksOnWarehouse.Count == 0 || f))
+                        {
+                            if (f)
+                            {
+                                tasksOnWarehouse.Dequeue();
+                            }
                             pizza.actualSizeWarehouse++;
                             task.updateStatus();
+
                         }
                         else
                         {
+                            if (!tasksOnWarehouse.Contains(task.id))
+                            {
+                                tasksOnWarehouse.Enqueue(task.id);
+                            }
                             task.delayInWarehouse = true;
                             task.updateTime();
                         }
@@ -504,8 +512,10 @@ class Program
                         break;
                 }
             }
+            // удаляем заявки, у которых статус Deleted
+            pizza.tasks = pizza.tasks.Where(task => task.status != TaskStatus.Deleted).ToList();
         }
+        Console.WriteLine("\n");
         AutomationSystem(pizza);
     }
-
 }
