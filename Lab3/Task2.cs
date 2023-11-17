@@ -383,8 +383,8 @@ class Program
         //WriteInFile();
         var pizza = new Pizza();
         pizza.tasks.Add(new Task(1, 40));
-        pizza.tasks.Add(new Task(2, 30));
-        pizza.tasks.Add(new Task(3, 50));
+        pizza.tasks.Add(new Task(2, 70));
+        pizza.tasks.Add(new Task(3, 80));
         int index = 0;
         Queue<int> tasksOnWarehouse = new Queue<int>();
         while (pizza.tasks.Count > 0)
