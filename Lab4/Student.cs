@@ -4,45 +4,45 @@ namespace Lab4
 {
     public class Student : Person
     {
-        public Teacher teacher { get; set; }
+        public Teacher Teacher { get; set; }
 
-        public string id { get; set; }
+        public string Id { get; set; }
 
-        private int _course;
+        private int course;
 
-        public int course {
+        public int Course {
             get
             {
-                return _course;
+                return course;
             }
             set
             {
-                _course = value > 0 ? value : 1;
+                course = value > 0 ? value : 1;
             }
         }
 
-        public Student( string _name, int _age, int _course, Teacher _teacher) : base(_name, _age)
+        public Student( string name, int age, int course, Teacher teacher) : base(name, age)
         {
-            id = Guid.NewGuid().ToString();
-            teacher = _teacher;
-            course = _course;
+            Id = Guid.NewGuid().ToString();
+            Teacher = teacher;
+            course = course;
         }
 
         public Student(string _name, int _age, int _course) : base(_name, _age)
         {
-            id = Guid.NewGuid().ToString();
-            teacher = null;
-            course = _course;
+            Id = Guid.NewGuid().ToString();
+            Teacher = null;
+            Course = _course;
         }
 
         public override void Print()
         {
-            Console.WriteLine($"Имя: {name}, возраст: {age}, курс {course}, учитель: {(teacher == null ? "нет" : teacher.name)}");
+            Console.WriteLine($"Имя: {Name}, возраст: {Age}, курс {Course}, учитель: {(Teacher == null ? "нет" : Teacher.Name)}");
         }
 
         public override string ToString()
         {
-            return $"{id}, {name}, {age}, {course}";
+            return $"{Id}, {Name}, {Age}, {Course}";
         }
 
         public static Student RandomStudent()
@@ -53,18 +53,18 @@ namespace Lab4
         public override Person Clone()
         {
 
-            return new Student(name, age, course, teacher == null ? null : (Teacher)teacher.Clone());
+            return new Student(Name, Age, Course, Teacher == null ? null : (Teacher)Teacher.Clone());
         }
 
         public override bool Equals(object obj)
         {
             if (obj is Student other)
             {
-                return base.Equals(obj) && Equals(id, other.id) && Equals(course, other.course);
+                return base.Equals(obj) && Equals(Id, other.Id) && Equals(Course, other.Course);
             }
             return false;
         }
-        public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), id, course);
+        public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), Id, Course);
     }
 
 }

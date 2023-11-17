@@ -4,29 +4,29 @@ namespace Lab4
 {
     public class Teacher : Person
     {
-        public List<Student> students { get; set; }
-        public string id { get; set; }
+        public List<Student> Students { get; set; }
+        public string Id { get; set; }
 
-        public Teacher(string _name, int _age, List<Student> _students) : base(_name, _age)
+        public Teacher(string name, int age, List<Student> students) : base(name, age)
         {
-            id = Guid.NewGuid().ToString();
-            students = _students;
+            Id = Guid.NewGuid().ToString();
+            Students = students;
         }
 
-        public Teacher(string _name, int _age) : base(_name, _age)
+        public Teacher(string name, int age) : base(name, age)
     {
-            id = Guid.NewGuid().ToString();
-            students = new List<Student>();
+            Id = Guid.NewGuid().ToString();
+            Students = new List<Student>();
         }
 
         public override void Print()
         {
-            Console.WriteLine($"Имя: {name}, возраст: {age}, список студентов: [{(students == null ? "" : string.Join(", ", students.Select(student => student.name)))}]"); 
+            Console.WriteLine($"Имя: {Name}, возраст: {Age}, список студентов: [{(Students == null ? "" : string.Join(", ", Students.Select(student => student.Name)))}]"); 
         }
 
         public override string ToString()
         {
-            return $"{id}, {name}, {age}";
+            return $"{Id}, {Name}, {Age}";
         }
 
         public static Teacher RandomTeacher()
@@ -37,23 +37,23 @@ namespace Lab4
         public override Person Clone()
         {
             List<Student> newStudents = new List<Student>();
-            foreach (Student student in students)
+            foreach (Student student in Students)
             {
-                var newStudent = new Student(student.name, student.age, student.course, (Teacher)student.teacher.MemberwiseClone());
+                var newStudent = new Student(student.Name, student.Age, student.Course, (Teacher)student.Teacher.MemberwiseClone());
                 newStudents.Add(newStudent);
             }
-            return new Teacher(name, age, newStudents);
+            return new Teacher(Name, Age, newStudents);
         }
 
         public override bool Equals(object obj)
         {
             if (obj is Student other)
             {
-                return base.Equals(obj) && Equals(id, other.id);
+                return base.Equals(obj) && Equals(Id, other.Id);
             }
             return false;
         }
-        public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), id);
+        public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), Id);
     }
 
 }

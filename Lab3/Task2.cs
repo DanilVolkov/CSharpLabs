@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-class Program
+class Task1
 {
     public enum TaskStatus
     {

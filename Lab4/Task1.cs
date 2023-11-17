@@ -1,6 +1,6 @@
 ﻿using Lab4;
 
-class Program
+class Task1
 {
     static void Main()
     {
@@ -36,7 +36,7 @@ class Program
         Console.WriteLine(stud.Equals(stud1));
         Console.WriteLine(stud.GetHashCode());
         Console.WriteLine(stud1.GetHashCode());
-        stud1.id = stud.id;
+        stud1.Id = stud.Id;
         Console.WriteLine(stud.Equals(stud1));
 
         Console.WriteLine();
@@ -50,11 +50,11 @@ class Program
             {
                 studentsCount++;
             }
-            else if (person is Teacher)
+            else if (person.GetType() == typeof(Teacher))
             {
                 teachersCount++;
             }
-            else
+            else if (person as Person != null)
             {
                 personsCount++;
             }
@@ -69,9 +69,9 @@ class Program
         {
             if (person is Student student)
             {
-                Console.Write($"Курс студента: {student.course}. Переведен на ");
-                student.course++;
-                Console.WriteLine($"{student.course} курс");
+                Console.Write($"Курс студента: {student.Course}. Переведен на ");
+                student.Course++;
+                Console.WriteLine($"{student.Course} курс");
             }
         }
 
@@ -79,15 +79,16 @@ class Program
         Console.WriteLine("Копирование: ");
 
         Student s = Student.RandomStudent();
-        s.teacher = Teacher.RandomTeacher();
+        s.Teacher = Teacher.RandomTeacher();
         Console.Write("Студент до изменения: ");
         s.Print();
 
         Teacher t = Teacher.RandomTeacher();
-        t.students.Add(s);
+        
         Console.Write("Учитель до изменения: ");
         t.Print();
-        s.teacher = t;
+        t.Students.Add(s);
+        s.Teacher = t;
         Console.Write("Учитель после добавления студента: ");
         t.Print();
 
@@ -97,24 +98,24 @@ class Program
         Teacher t1 = (Teacher)t.Clone();
         Console.Write("Учитель после копирования: ");
         t1.Print();
-        t1.students.Add(Student.RandomStudent());
+        t1.Students.Add(Student.RandomStudent());
         Console.Write("Учитель (копия) после добавления еще 1 студента: ");
         t1.Print();
         Console.Write("Исходный учитель: ");
         t.Print();
         Student s1 = (Student)s.Clone();
-        s1.teacher.age = 12;
+        s1.Teacher.Age = 12;
         Console.Write("Учитель копированного студента после изменения его возраста: ");
-        s1.teacher.Print();
+        s1.Teacher.Print();
         Console.Write("Учитель исходный: ");
-        s.teacher.Print();
+        s.Teacher.Print();
         Console.Write("Студент скопированного учителя: ");
-        t1.students[0].Print();
-        t1.students[0].age = 12;
+        t1.Students[0].Print();
+        t1.Students[0].Age = 12;
         Console.Write("Студент скопированного учителя после изменения возраста: ");
-        t1.students[0].Print();
+        t1.Students[0].Print();
         Console.Write("Исходный учитель до копирования: ");
-        t.students[0].Print();
+        t.Students[0].Print();
 
         Console.WriteLine();
         Console.WriteLine("Копирование на примере массива людей:");
